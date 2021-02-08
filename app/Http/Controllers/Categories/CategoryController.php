@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Categories;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Categories\CategoryResource;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::parents()->ordered()->get();
+        return CategoryResource::collection(
+            Category::with('children')->parents()->ordered()->get()
+        );
 
-        dd($categories);
+
+        
     }
 }

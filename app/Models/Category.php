@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    protected $fillable = [
+        'name',
+        'order'
+    ];
+
     public function scopeParents(Builder $builder)
     {
         $builder->whereNull('parent_id');

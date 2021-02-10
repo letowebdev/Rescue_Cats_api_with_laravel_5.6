@@ -8,9 +8,15 @@ use App\Http\Requests\Posts\PostRequest;
 use App\Http\Resources\Posts\PostIndexResource;
 use App\Http\Resources\Posts\PostResource;
 use App\Models\Post;
+use Faker\Generator;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    
     public function index()
     {
         $posts = Post::paginate(5);
@@ -23,12 +29,12 @@ class PostController extends Controller
         return new PostResource($post);
     }
 
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, Generator $faker)
     {
         $post = Post::create([
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
             'title' => $title = $request->title,
-            'slug' => str_slug($title),
+            'slug' => str_slug($title  . $faker->unique()->randomNumber),
             'body' => $request->body
         ]);
 

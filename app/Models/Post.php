@@ -6,9 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $guarded = [];
+    
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function addComment($comment)
+    {
+        $this->comments()->create($comment);
     }
 
     public function user()

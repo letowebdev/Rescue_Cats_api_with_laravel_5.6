@@ -12,7 +12,6 @@ class CommentController extends Controller
 {
     public function store(Post $post)
     {
-        
         $post->addComment(([
             'user_id' => 1,
             'body' => request('body')

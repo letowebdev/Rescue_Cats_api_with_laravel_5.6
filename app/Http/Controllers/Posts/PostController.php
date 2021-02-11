@@ -31,17 +31,17 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {  
-        //get the image 
+        //get the post image 
         $image = $request->file('image');
         $image_path = $image->getPathName();
         
         //get the original file and replace any spaces with _
         $filename = time()."_".preg_replace('/\s+/','_',strtolower($image->getClientOriginalName()));
         
-        //move the image to the temporary location(temp)
+        //move the image to the temporary location
         $temp = $image->storeAs('uploads/original',$filename, 'temp');
 
-        //create a record to the database for the post before
+        //create a record to the database for the post before any jobs
         $post = Post::create([
             'user_id' => auth()->user()->id,
             'title' => $title = $request->title,

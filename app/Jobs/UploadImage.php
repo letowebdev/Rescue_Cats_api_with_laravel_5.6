@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Jobs\Posts;
+namespace App\Jobs;
 
+use Image;
+use File;
 use App\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
-use Intervention\Image\File;
-
 
 class UploadImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $post;
-
     /**
      * Create a new job instance.
      *
@@ -41,7 +39,7 @@ class UploadImage implements ShouldQueue
         $original_file = storage_path() . '/uploads/original/'. $filename;
 
         try{
-            // create the Large Image and save to temp disk
+            // create the Large Image and save to tmp disk
             Image::make($original_file)
                 ->fit(800, 600, function($constraint){
                     $constraint->aspectRatio();
@@ -82,5 +80,6 @@ class UploadImage implements ShouldQueue
         } catch(\Exception $e){
             \Log::error($e->getMessage());
         }
+
     }
 }

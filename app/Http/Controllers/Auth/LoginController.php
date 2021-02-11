@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('logout');
+    }
     public function action(LoginRequest $request)
     {
         if (!$token = Auth::attempt($request->only('email', 'password'))) {
@@ -26,5 +30,13 @@ class LoginController extends Controller
                         'token' => $token
                     ]
                 ]);
+    }
+
+
+    public function logout()
+    {
+        auth()->guard('api')->logout();
+
+        return response()->json(['message' => 'Logged out']);
     }
 }

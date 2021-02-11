@@ -21,6 +21,8 @@ class CreatePostsTable extends Migration
             $table->string('image');
             $table->boolean('is_live')->default(false);
             $table->text('body');
+            $table->boolean('upload_successful')->default(false);
+            $table->string('disk')->default('public');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

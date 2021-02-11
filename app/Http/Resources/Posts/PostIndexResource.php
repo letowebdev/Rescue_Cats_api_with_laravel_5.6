@@ -20,6 +20,7 @@ class PostIndexResource extends JsonResource
             'slug' => $this->slug,
             'title' => $this->title,
             'body' => $this->body,
+            'image' => $this->image,
         ];
     }
 }

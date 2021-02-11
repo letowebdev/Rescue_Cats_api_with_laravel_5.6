@@ -21,6 +21,8 @@ class PostIndexResource extends JsonResource
             'title' => $this->title,
             'body' => $this->body,
             'image' => $this->image,
+            'is_live' => $this->is_live,
+            'upload_successful' => $this->upload_successful,
         ];
     }
 }

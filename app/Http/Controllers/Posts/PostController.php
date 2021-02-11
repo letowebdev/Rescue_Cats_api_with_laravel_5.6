@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Posts;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\PostRequest;
+use App\Http\Requests\Posts\PostUpdateRequest;
 use App\Http\Resources\Posts\PostIndexResource;
 use App\Http\Resources\Posts\PostResource;
 use App\Jobs\UploadImage;
@@ -56,9 +57,17 @@ class PostController extends Controller
     return new PostResource($post);
     }
 
-    public function update()
+    public function update(PostUpdateRequest $request, $post)
     {
+        $post = Post::find($post);
 
+        $post->update([
+            'title'=>$request->title,
+            'body' => $request->body,
+            'is_live' => ! $post->upload_successful ? false : $request->is_live 
+        ]);
+
+        return new PostResource($post);
     }
 
 }

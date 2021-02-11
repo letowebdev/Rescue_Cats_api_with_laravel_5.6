@@ -2,7 +2,8 @@
 
 Route::resource('categories', 'Categories\CategoryController');
 Route::resource('posts', 'Posts\PostController');
-Route::resource('posts/{post}/comments', 'Comments\CommentController');
+
+Route::post('posts/{post}/comments', 'Comments\CommentController@store');
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('register', 'Auth\RegisterController@action');

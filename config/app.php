@@ -147,7 +147,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Grimzy\LaravelMysqlSpatial\SpatialServiceProvider::class,
 
         /*
          * Package Service Providers...

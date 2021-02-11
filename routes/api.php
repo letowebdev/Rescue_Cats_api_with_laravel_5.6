@@ -9,4 +9,5 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'Auth\LoginController@action');
     Route::post('logout', 'Auth\LoginController@logout');
     Route::get('me', 'Auth\MeController@action');
+    Route::put('settings/profile', 'Users\ProfileController@update');
 });

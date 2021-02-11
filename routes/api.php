@@ -8,4 +8,5 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', 'Auth\RegisterController@action');
     Route::post('login', 'Auth\LoginController@action');
     Route::post('logout', 'Auth\LoginController@logout');
+    Route::get('me', 'Auth\MeController@action');
 });

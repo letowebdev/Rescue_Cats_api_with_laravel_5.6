@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\PostRequest;
 use App\Http\Resources\Posts\PostIndexResource;
 use App\Http\Resources\Posts\PostResource;
+use App\Jobs\Posts\UploadImage;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -51,7 +52,9 @@ class PostController extends Controller
             ]);
 
 
-        return new PostResource($post);
+        //dispatch a job to handle the image manipulation
+        $this->dispatch(new UploadImage($post));
+        return response()->json($post,200);
     }
 
     public function update()

@@ -10,6 +10,7 @@ use App\Http\Resources\Posts\PostIndexResource;
 use App\Http\Resources\Posts\PostResource;
 use App\Jobs\UploadImage;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -76,6 +77,25 @@ class PostController extends Controller
 
 
         return new PostResource($post);
+    }
+
+    public function destroy($post){
+        $post = Post::findOrFail($post);
+        // $this->authorize('delete',$post);
+
+       
+
+        //delete the files associated to the record
+        foreach(['thumbnail','large','original'] as $size){
+            //check if the file exists in the database 
+            if(Storage::disk($post->disk)->exists("uploads/posts/{$size}/".$post->image)){
+                Storage::disk($post->disk)->delete("uploads/posts/{$size}/".$post->image);
+            }
+        }
+
+        $post->delete();
+
+        return response()->json(['message' => 'Post deleted'],200);
     }
 
 }

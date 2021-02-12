@@ -45,6 +45,6 @@ class Post extends Model
     protected function getImagePath($size)
     {
         return Storage::disk($this->disk)
-        ->url("uploads/posts/{$size}" . $this->image);
+        ->url("uploads/posts/{$size}/" . $this->image);
     }
 }

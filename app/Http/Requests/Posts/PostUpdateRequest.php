@@ -28,6 +28,7 @@ class PostUpdateRequest extends FormRequest
         return [
             'title' => 'required',
             'body' => 'required',
+            'tags' => 'required'
         ];
     }
 

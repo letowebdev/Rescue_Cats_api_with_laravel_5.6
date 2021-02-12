@@ -49,8 +49,11 @@ class PostController extends Controller
             'slug' => str_slug( time()."-".$title),
             'body' => $request->body,
             'image' => $filename,
-            'disk' => config('site.upload_disk')
+            'disk' => config('site.upload_disk'),
         ]);
+
+        //adding tags
+        $post->tag($request->tags);
 
     //dispatch a job to handle the image manipulation
     $this->dispatch(new UploadImage($post));
@@ -66,6 +69,10 @@ class PostController extends Controller
             'body' => $request->body,
             'is_live' => ! $post->upload_successful ? false : $request->is_live 
         ]);
+
+        //adding tags
+        $post->retag($request->tags);
+
 
         return new PostResource($post);
     }

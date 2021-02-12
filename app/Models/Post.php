@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use Taggable;
+
     protected $guarded = [];
     
     public function getRouteKeyName()

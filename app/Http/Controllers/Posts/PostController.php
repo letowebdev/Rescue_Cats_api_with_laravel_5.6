@@ -63,6 +63,7 @@ class PostController extends Controller
     public function update(PostUpdateRequest $request, $post)
     {
         $post = Post::find($post);
+        $this->authorize('update', $post);
 
         $post->update([
             'title'=>$request->title,

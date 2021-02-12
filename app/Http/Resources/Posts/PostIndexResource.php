@@ -23,7 +23,10 @@ class PostIndexResource extends JsonResource
             'image' => $this->image,
             'is_live' => $this->is_live,
             'upload_successful' => $this->upload_successful,
-            'tags' => $this->tags
+            'tag_list' => [
+                'tags' => $this->tagArray,
+                'normalized' => $this->tagArraynormalized,
+            ]
         ];
     }
 }

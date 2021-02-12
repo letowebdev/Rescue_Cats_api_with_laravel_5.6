@@ -5,17 +5,12 @@ namespace App\Repositories\Eloquent;
 use App\Models\User;
 use App\Repositories\Contracts\UserInterface;
 
-class UserRepository implements UserInterface {
+class UserRepository extends BaseRepository implements UserInterface {
 
-
-    public function all() {
-        
-        return User::all();
-    }
-
-    public function paginate($value)
+    public function model()
     {
-        return User::paginate(5);
+        return User::class;
     }
+
 
 }

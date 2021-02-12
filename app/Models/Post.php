@@ -12,11 +12,6 @@ class Post extends Model
     use Taggable;
 
     protected $guarded = [];
-    
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 
     public function getImagesAttribute()
     {

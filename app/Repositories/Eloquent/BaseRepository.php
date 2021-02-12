@@ -4,7 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Exceptions\ModelNotFoundException;
 use App\Repositories\Contracts\BaseInterface;
-use Exception;
 
 abstract class BaseRepository implements BaseInterface {
 
@@ -20,9 +19,38 @@ abstract class BaseRepository implements BaseInterface {
         return $this->model->all();
     }
 
-    public function paginate($value)
+    public function paginate($perPage = 10)
     {
-        return $this->model->paginate($value);
+        return $this->model->paginate($perPage);
+    }
+
+    
+    public function find($id){
+        $result = $this->model->findOrFail($id);
+
+        return $result;
+    }
+
+    public function findWhere($column, $value){
+        return $this->model->where($column, $value)->get();
+    }
+
+    public function findWhereFirst($column, $value){
+        return $this->model->where($column, $value)->firstOrFail();
+    }
+
+    public function create(array $data){
+        return $this->model->create($data);
+    }
+
+    public function update($id, array $data){
+        $record = $this->find($id);
+        return $record->update($data);
+    }
+
+    public function delete($id){
+        $record = $this->find($id);
+        return $record->delete();
     }
 
     protected function getModelClass()
@@ -34,6 +62,7 @@ abstract class BaseRepository implements BaseInterface {
 
         return app()->make($this->model());
     }
+
 
 
 }

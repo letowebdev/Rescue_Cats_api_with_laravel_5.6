@@ -5,6 +5,18 @@ namespace App\Repositories\Contracts;
 interface BaseInterface {
     
     public function all();
+    
+    public function find($id);
 
-    public function paginate($value);
+    public function findWhere($column, $value);
+
+    public function findWhereFirst($column, $value);
+
+    public function create(array $data);
+
+    public function update($id, array $data);
+
+    public function delete($id);
+
+    public function paginate($perPage);
 }

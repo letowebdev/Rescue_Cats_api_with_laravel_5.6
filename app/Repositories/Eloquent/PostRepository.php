@@ -12,5 +12,16 @@ class PostRepository extends BaseRepository implements PostInterface {
         return Post::class;
     }
 
+    public function addTags($id, array $data)
+    {
+        $post = $this->find($id);
+        $post->tag($data);
+    }
+
+    public function reTags($id, array $data)
+    {
+        $post = $this->find($id);
+        $post->retag($data);
+    }
 
 }

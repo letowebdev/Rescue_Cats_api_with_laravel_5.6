@@ -31,8 +31,9 @@ class PostController extends Controller
         return PostIndexResource::collection($posts);
     }
 
-    public function show(Post $post)
+    public function show($postId)
     {
+        $post = $this->posts->find($postId);
         return new PostResource($post);
     }
 
@@ -49,7 +50,7 @@ class PostController extends Controller
         $temp = $image->storeAs('uploads/original',$filename, 'temp');
 
         //create a record to the database for the post before any jobs
-        $post = Post::create([
+        $post = $this->posts->create([
             'user_id' => auth()->user()->id,
             'title' => $title = $request->title,
             'slug' => str_slug( time()."-".$title),
@@ -68,7 +69,7 @@ class PostController extends Controller
 
     public function update(PostUpdateRequest $request, $post)
     {
-        $post = Post::find($post);
+        $post = $this->posts->find($post);
         $this->authorize('update', $post);
 
         $post->update([
@@ -85,7 +86,7 @@ class PostController extends Controller
     }
 
     public function destroy($post){
-        $post = Post::findOrFail($post);
+        $post = $this->posts->find($post);
         $this->authorize('delete',$post);
 
        

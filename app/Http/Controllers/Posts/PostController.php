@@ -10,18 +10,23 @@ use App\Http\Resources\Posts\PostIndexResource;
 use App\Http\Resources\Posts\PostResource;
 use App\Jobs\UploadImage;
 use App\Models\Post;
+use App\Repositories\Contracts\PostInterface;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function __construct()
+    protected $posts;
+
+    public function __construct(PostInterface $posts)
     {
         $this->middleware('auth:api')->only('store');
+
+        $this->posts = $posts;
     }
     
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = $this->posts->paginate(5);
 
         return PostIndexResource::collection($posts);
     }
@@ -81,13 +86,13 @@ class PostController extends Controller
 
     public function destroy($post){
         $post = Post::findOrFail($post);
-        // $this->authorize('delete',$post);
+        $this->authorize('delete',$post);
 
        
 
-        //delete the files associated to the record
+        //delete the images associated to the post
         foreach(['thumbnail','large','original'] as $size){
-            //check if the file exists in the database 
+            //check if the images exist in the database 
             if(Storage::disk($post->disk)->exists("uploads/posts/{$size}/".$post->image)){
                 Storage::disk($post->disk)->delete("uploads/posts/{$size}/".$post->image);
             }

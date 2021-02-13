@@ -10,6 +10,8 @@ interface PostInterface {
 
     public function like($id);
 
+    public function wasLikedByUser($id);
+
 
 
 

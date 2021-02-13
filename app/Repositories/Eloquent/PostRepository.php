@@ -27,11 +27,19 @@ class PostRepository extends BaseRepository implements PostInterface {
     public function like($id) {
 
         $post = $this->find($id);
+
         if($post->isLikedByUser(auth()->id())) {
             $post->unlike();
         } else {
             $post->like();
         }
+    }
+
+    public function wasLikedByUser($id) {
+        $post = $this->model->find($id);
+
+        //isLikedByUser is the method we have created on our likeable trait
+        return $post->isLikedByUser(auth()->id());
     }
 
 }

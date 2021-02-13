@@ -25,6 +25,15 @@ class LikeController extends Controller
         ]);
     }
 
+    //Checking if the user has like the post or not so we show him unlike or like
+    public function show($postId) {
+    $isLiked = $this->posts->wasLikedByUser($postId);
+
+        return response()->json([
+            "liked" => $isLiked
+        ], 200);
+    }
+
 
 
 

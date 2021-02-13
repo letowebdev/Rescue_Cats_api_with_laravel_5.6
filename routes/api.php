@@ -4,6 +4,7 @@ Route::resource('categories', 'Categories\CategoryController');
 Route::resource('posts', 'Posts\PostController');
 
 Route::post('posts/{post}/like', 'Likes\LikeController@store');
+Route::get('posts/{post}/liked', 'Likes\LikeController@show');
 
 Route::get('users', 'Users\UserController@index');
 

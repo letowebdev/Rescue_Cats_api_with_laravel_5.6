@@ -11,6 +11,7 @@ use App\Http\Resources\Posts\PostResource;
 use App\Jobs\UploadImage;
 use App\Models\Post;
 use App\Repositories\Contracts\PostInterface;
+use App\Repositories\Eloquent\Criteria\isLive;
 use App\Repositories\Eloquent\Criteria\LatestFirst;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,7 +29,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->posts->withCriteria([
-            new LatestFirst
+            new LatestFirst, 
+            new isLive
         ])->paginate(5);
 
         return PostIndexResource::collection($posts);

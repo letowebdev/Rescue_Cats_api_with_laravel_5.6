@@ -4,8 +4,9 @@ namespace App\Repositories\Eloquent;
 
 use App\Exceptions\ModelNotFoundException;
 use App\Repositories\Contracts\BaseInterface;
+use App\Repositories\Criteria\CriteriaInterface;
 
-abstract class BaseRepository implements BaseInterface {
+abstract class BaseRepository implements BaseInterface, CriteriaInterface {
 
     protected $model;
 
@@ -16,7 +17,7 @@ abstract class BaseRepository implements BaseInterface {
 
     public function all() 
     {
-        return $this->model->all();
+        return $this->model->get();
     }
 
     public function paginate($perPage = 10)
@@ -51,6 +52,16 @@ abstract class BaseRepository implements BaseInterface {
     public function delete($id){
         $record = $this->find($id);
         return $record->delete();
+    }
+
+    public function withCriteria(...$criteria) {
+        $criteria = array_flatten($criteria);
+
+        foreach ($criteria as $criterion) {
+            $this->model = $criterion->apply($this->model);
+        }
+
+        return $this;
     }
 
     protected function getModelClass()

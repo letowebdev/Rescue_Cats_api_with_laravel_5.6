@@ -11,6 +11,7 @@ use App\Http\Resources\Posts\PostResource;
 use App\Jobs\UploadImage;
 use App\Models\Post;
 use App\Repositories\Contracts\PostInterface;
+use App\Repositories\Eloquent\Criteria\LatestFirst;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -26,7 +27,9 @@ class PostController extends Controller
     
     public function index()
     {
-        $posts = $this->posts->paginate(5);
+        $posts = $this->posts->withCriteria([
+            new LatestFirst
+        ])->paginate(5);
 
         return PostIndexResource::collection($posts);
     }
@@ -103,5 +106,7 @@ class PostController extends Controller
 
         return response()->json(['message' => 'Post deleted'],200);
     }
+
+    
 
 }

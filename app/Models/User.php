@@ -28,6 +28,15 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'image_url'
+    ];
+
+    public function getImageUrlAttribute()
+    {
+        return 'https://de.gravatar.com/avatar/'.md5(strtolower($this->email)).'jph?s=200&d=mm';
+    }
+
     public static function boot()
     {
         parent::boot();

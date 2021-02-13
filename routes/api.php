@@ -8,6 +8,8 @@ Route::post('posts/{post}/like', 'Likes\LikeController@store');
 Route::get('posts/{post}/liked', 'Likes\LikeController@show');
 
 Route::get('users', 'Users\UserController@index');
+Route::get('users/{id}/posts', 'Users\UserController@show');
+Route::get('user/{username}', 'Users\UserController@findByUsername');
 
 Route::get('search/posts', 'Searches\SearchController@show');
 

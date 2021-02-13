@@ -8,6 +8,8 @@ Route::get('posts/{post}/liked', 'Likes\LikeController@show');
 
 Route::get('users', 'Users\UserController@index');
 
+Route::get('search/posts', 'Searches\SearchController@show');
+
 Route::post('posts/{post}/comments', 'Comments\CommentController@store')->name('addComment');
 Route::put('comments/{comment}', 'Comments\CommentController@update')->name('updateComment');
 Route::delete('comments/{comment}', 'Comments\CommentController@destroy')->name('deleteComment');

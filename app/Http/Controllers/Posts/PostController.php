@@ -11,6 +11,7 @@ use App\Http\Resources\Posts\PostResource;
 use App\Jobs\UploadImage;
 use App\Models\Post;
 use App\Repositories\Contracts\PostInterface;
+use App\Repositories\Eloquent\Criteria\forUser;
 use App\Repositories\Eloquent\Criteria\isLive;
 use App\Repositories\Eloquent\Criteria\LatestFirst;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +39,9 @@ class PostController extends Controller
 
     public function show($postId)
     {
-        $post = $this->posts->find($postId);
+        $post = $this->posts->withCriteria([
+            new isLive,
+        ])->find($postId);
         return new PostResource($post);
     }
 

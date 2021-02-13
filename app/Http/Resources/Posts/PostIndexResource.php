@@ -22,6 +22,7 @@ class PostIndexResource extends JsonResource
             'body' => $this->body,
             'images' => $this->images,
             'is_live' => $this->is_live,
+            'likes_count' => $this->likes()->count(),
             'upload_successful' => $this->upload_successful,
             'tag_list' => [
                 'tags' => $this->tagArray,

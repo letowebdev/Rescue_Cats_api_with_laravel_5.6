@@ -8,6 +8,8 @@ interface PostInterface {
 
     public function reTags($id, array $data);
 
+    public function like($id);
+
 
 
 

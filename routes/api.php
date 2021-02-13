@@ -3,6 +3,8 @@
 Route::resource('categories', 'Categories\CategoryController');
 Route::resource('posts', 'Posts\PostController');
 
+Route::post('posts/{post}/like', 'Likes\LikeController@store');
+
 Route::get('users', 'Users\UserController@index');
 
 Route::post('posts/{post}/comments', 'Comments\CommentController@store')->name('addComment');

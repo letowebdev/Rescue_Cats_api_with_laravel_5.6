@@ -24,4 +24,14 @@ class PostRepository extends BaseRepository implements PostInterface {
         $post->retag($data);
     }
 
+    public function like($id) {
+
+        $post = $this->find($id);
+        if($post->isLikedByUser(auth()->id())) {
+            $post->unlike();
+        } else {
+            $post->like();
+        }
+    }
+
 }

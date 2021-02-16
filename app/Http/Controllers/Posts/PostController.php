@@ -39,40 +39,70 @@ class PostController extends Controller
 
     public function show($postId)
     {
-        $post = $this->posts->withCriteria([
-            new isLive,
-        ])->find($postId);
+        $post = $this->posts->find($postId);
         return new PostResource($post);
     }
 
     public function store(PostRequest $request)
     {  
-        //get the post image 
+    //     //get the post image 
+    //     $image = $request->file('image');
+    //     $image_path = $image->getPathName();
+        
+    //     //get the original file and replace any spaces with _
+    //     $filename = time()."_".preg_replace('/\s+/','_',strtolower($image->getClientOriginalName()));
+        
+    //     //move the image to the temporary location
+    //     $temp = $image->storeAs('uploads/original',$filename, 'temp');
+
+    //     //create a record to the database for the post before any jobs
+    //     $post = $this->posts->create([
+    //         'user_id' => auth()->user()->id,
+    //         'title' => $title = $request->title,
+    //         'slug' => str_slug( time()."-".$title),
+    //         'body' => $request->body,
+    //         'image' => $filename,
+    //         'disk' => config('site.upload_disk'),
+    //     ]);
+
+    //     //adding tags
+    //     $post->tag($request->tags);
+
+    // //dispatch a job to handle the image manipulation
+    // $this->dispatch(new UploadImage($post));
+    // return new PostResource($post);
+
+        /// get the image
         $image = $request->file('image');
         $image_path = $image->getPathName();
-        
-        //get the original file and replace any spaces with _
+
+
+        // get the original file name and replace any spaces with _
         $filename = time()."_".preg_replace('/\s+/','_',strtolower($image->getClientOriginalName()));
         
-        //move the image to the temporary location
+        // move the image to the temporary location (tmp)
         $temp = $image->storeAs('uploads/original',$filename, 'temp');
 
-        //create a record to the database for the post before any jobs
+        // create the database record for the post
+        // $post = auth()->user()->posts()->create([
+        //     'image' => $filename,
+        //     'disk' => config('site.upload_disk')
+        // ]);
+
         $post = $this->posts->create([
             'user_id' => auth()->user()->id,
-            'title' => $title = $request->title,
-            'slug' => str_slug( time()."-".$title),
-            'body' => $request->body,
             'image' => $filename,
             'disk' => config('site.upload_disk'),
         ]);
 
-        //adding tags
-        $post->tag($request->tags);
+        // dispatch a job to handle the image manipulation
+        $this->dispatch(new UploadImage($post));
+        
+        return response()->json($post, 200);
 
-    //dispatch a job to handle the image manipulation
-    $this->dispatch(new UploadImage($post));
-    return new PostResource($post);
+
+
+
     }
 
     public function update(PostUpdateRequest $request, $post)
@@ -81,7 +111,8 @@ class PostController extends Controller
         $this->authorize('update', $post);
 
         $post->update([
-            'title'=>$request->title,
+            'title'=>$title = $request->title,
+            'slug' => str_slug( time()."-".$title),
             'body' => $request->body,
             'is_live' => ! $post->upload_successful ? false : $request->is_live 
         ]);

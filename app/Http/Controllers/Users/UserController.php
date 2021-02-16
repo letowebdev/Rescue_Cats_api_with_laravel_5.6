@@ -50,7 +50,7 @@ class UserController extends Controller
 
     public function userOwnsPost($id)
     {
-        $post = $this->posts->withCriteria([new forUser(auth()->id)])
+        $post = $this->posts->withCriteria([new forUser(auth()->user()->id)])
                             ->findWhereFirst('id', $id);
 
         return new PostResource($post);

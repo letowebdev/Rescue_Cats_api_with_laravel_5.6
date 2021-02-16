@@ -10,6 +10,7 @@ Route::get('posts/{post}/liked', 'Likes\LikeController@show');
 Route::get('users', 'Users\UserController@index');
 Route::get('users/{id}/posts', 'Users\UserController@show');
 Route::get('user/{username}', 'Users\UserController@findByUsername');
+Route::get('posts/{id}/user', 'Users\UserController@userOwnsPost');
 
 Route::get('search/posts', 'Searches\SearchController@show');
 

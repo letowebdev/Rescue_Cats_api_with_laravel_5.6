@@ -26,10 +26,17 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required'
         ];
     }
+
+    public function messages()
+{
+    return [
+        'email.exists' => 'We don\'t have this email in our database, please check your email',
+    ];
+}
 
     protected function failedValidation(Validator $validator)
     {

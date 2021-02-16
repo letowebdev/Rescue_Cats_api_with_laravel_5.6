@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('tagline')->nullable();
             $table->text('about')->nullable();
             $table->string('formatted_address')->nullable();
-            $table->boolean('available_to_hire')->nullable()->default(false);
+            $table->boolean('available_to_volunteer')->nullable()->default(false);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

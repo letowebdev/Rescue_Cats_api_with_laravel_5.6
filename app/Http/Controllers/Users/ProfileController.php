@@ -14,7 +14,7 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
         
-        $user->update($request->only(['tagline', 'name', 'about', 'formatted_address', 'available_to_hire']));
+        $user->update($request->only(['tagline', 'name', 'about', 'formatted_address', 'available_to_volunteer']));
 
 
         return new PrivateUserResource($user);

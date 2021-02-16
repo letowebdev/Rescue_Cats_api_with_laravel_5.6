@@ -30,7 +30,7 @@ class UserProfileUpdateRequest extends FormRequest
             'name' => 'required',
             'about' => 'required|string|min:20',
             'formatted_address' => 'required',
-            'available_to_hire' => 'required',
+            'available_to_volunteer' => 'required',
 
         ];
     }

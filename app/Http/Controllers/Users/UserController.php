@@ -35,7 +35,7 @@ class UserController extends Controller
     }
 
     public function show($userId) {
-        $posts = $this->posts->withCriteria([new isLive])->findWhere('user_id', $userId);
+        $posts = $this->posts->findWhere('user_id', $userId);
 
         return PostResource::collection($posts);
     

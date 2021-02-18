@@ -62,10 +62,10 @@ class PostRepository extends BaseRepository implements PostInterface {
             });
         }
 
-        //Oorder by likes or latest first
-        if ($request->orderBy='likes') {
-            $query->withCount('likes')
-                ->OrderByDesc('likes_count');
+        // order the query by likes or latest first
+        if($request->orderBy=='likes'){
+            $query->withCount('likes') // likes_count
+                ->orderByDesc('likes_count');
         } else {
             $query->latest();
         }
